@@ -35,7 +35,6 @@ public class Showcase extends BaseActivity implements View.OnClickListener {
         mBuildButton.setOnClickListener(this);
         mXyzButton.setOnClickListener(this);
         mCapstoneButton.setOnClickListener(this);
-        fdjbd
 
     }
 
