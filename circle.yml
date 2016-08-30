@@ -2,4 +2,4 @@ test:
   override:
   
     # copy the build outputs to artifacts
-    - cp -r MyProtfolioApp/build $CIRCLE_ARTIFACTS
+    - cp -r  - /home/ubuntu/MyProtfolioApp/build $CIRCLE_ARTIFACTS
