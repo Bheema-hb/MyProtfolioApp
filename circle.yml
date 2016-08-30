@@ -2,4 +2,4 @@ test:
   override:
   
     # copy the build outputs to artifacts
-    - cp -r MyProtfolioApp $CIRCLE_ARTIFACTS
+    - cp -r MyProtfolioApp/builds $CIRCLE_ARTIFACTS
