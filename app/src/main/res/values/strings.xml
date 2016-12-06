@@ -9,4 +9,17 @@
     <string name="capstone">CAPSTONE: MY OWN APP</string>
     <string name="my_nanodegree_apps">My Nanodegree Apps!</string>
     <string name="this_will_launch">This button will launch my</string>
+    <string name="msg_no_movies">No movies found.</string>
+    <string name="msg_loading">Loading...</string>
+    <string name="title_movie_list_pop">Popular Movies</string>
+    <string name="title_movie_list_rate">Top rated Movies</string>
+    <string name="title_movie_fav">Favourite Movies</string>
+    <string name="action_popular">Most popular</string>
+    <string name="action_rated">Top rated</string>
+    <string name="action_fav">Favouite</string>
+    <string name="lbl_release">Release Date : </string>
+    <string name="lbl_rate">Rating :  </string>
+    <string name="lbl_rating">10</string>
+    <string name="title_details">Movie Details</string>
+    <string name="nano_degree">Nanodegree</string>
 </resources>
