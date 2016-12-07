@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +32,8 @@ public class MovieDetailFragment extends BaseFragment {
     ImageView imgMovie;
     @Bind(R.id.txt_release)
     TextView txtRelease;
+    @Bind(R.id.movie_overview)
+    AppCompatTextView overview;
     @Bind(R.id.txt_rating)
     TextView txtRating;
     @Bind(R.id.txt_title)
@@ -82,7 +85,7 @@ public class MovieDetailFragment extends BaseFragment {
         txtRelease.setText(getString(R.string.lbl_release).concat(" " + item.getRelease_date()));
         txtRating.setText(getString(R.string.lbl_rate).concat(" " + String.valueOf(item.getVote_average())).concat("/").concat(getString(R.string.lbl_rating)));
 
-
+        overview.setText(item.getOverview());
     }
 
 

@@ -22,4 +22,5 @@
     <string name="lbl_rating">10</string>
     <string name="title_details">Movie Details</string>
     <string name="nano_degree">Nanodegree</string>
+    <string name="overview">Overview:</string>
 </resources>
