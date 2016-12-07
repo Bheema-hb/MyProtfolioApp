@@ -23,4 +23,16 @@
     <string name="title_details">Movie Details</string>
     <string name="nano_degree">Nanodegree</string>
     <string name="overview">Overview:</string>
+    <string name="lbl_reviews">Reviews</string>
+    <string name="lbl_trailors">Trailors</string>
+    <string name="lbl_summery">Summery</string>
+    <string name="added_to_fav">Added to Favourite list</string>
+    <string name="removed_fav">Removed from favourite list</string>
+    <string name="msg_no_reviews">No reviews found</string>
+    <string name="ok">OK</string>
+    <string name="no_network">No Network</string>
+    <string name="no_internet_connection">No Internet connection!\nPlease check your internet connection</string>
+    <string name="msg_no_trailers">No trailers</string>
+    <string name="error">Error!</string>
+    <string name="unable_to_fetch_data">Unable to fetch requested data. Please try again</string>
 </resources>
