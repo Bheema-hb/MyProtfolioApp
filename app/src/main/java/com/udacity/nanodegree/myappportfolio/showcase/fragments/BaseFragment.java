@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.udacity.nanodegree.myappportfolio.R;
+
 /**
  * Created by Bheema on 12/6/16.
  */
@@ -82,4 +84,14 @@ public class BaseFragment extends Fragment {
         }
     }
 
+
+    public void showMessageDialog(String title,String message){
+        showDialog(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dismissDialog();
+            }
+        }, null, getString(R.string.ok), "", title, message);
+
+    }
 }

@@ -15,12 +15,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.nanodegree.myappportfolio.R;
+import com.udacity.nanodegree.myappportfolio.showcase.NanodegreeApplication;
+import com.udacity.nanodegree.myappportfolio.showcase.activities.MovieListActivity;
 import com.udacity.nanodegree.myappportfolio.showcase.adapter.MoviesListAdapter;
+import com.udacity.nanodegree.myappportfolio.showcase.database.MovieDbHelper;
 import com.udacity.nanodegree.myappportfolio.showcase.model.BaseResponse;
 import com.udacity.nanodegree.myappportfolio.showcase.model.MoviesItem;
 import com.udacity.nanodegree.myappportfolio.showcase.model.MoviesResponse;
 import com.udacity.nanodegree.myappportfolio.showcase.network.MoviesManager;
 import com.udacity.nanodegree.myappportfolio.showcase.network.NetworkUrlService;
+import com.udacity.nanodegree.myappportfolio.showcase.network.NetworkUtility;
 
 import java.util.List;
 
@@ -39,6 +43,7 @@ public class MovieListFragment extends BaseFragment implements MoviesManager.OnC
     OnFragmentInteractionListener mListener;
     private final int MOVIE_POPULAR = 1;
     private final int MOVIE_RATED = 2;
+    private final int MOVIE_FAV = 3;
     private int selectedMenu;
     private MoviesManager mMoviesManager;
     private MoviesListAdapter adapter;
@@ -46,14 +51,14 @@ public class MovieListFragment extends BaseFragment implements MoviesManager.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.movie_list_frag_layout, container,false);
+        View view = inflater.inflate(R.layout.movie_list_frag_layout, container, false);
         ButterKnife.bind(this, view);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mMoviesManager = new MoviesManager();
         getMoviesList(MOVIE_POPULAR);
         selectedMenu = MOVIE_POPULAR;
-        getActivity().setTitle(R.string.title_movie_list_pop);
+        ((MovieListActivity) getActivity()).setTitle(R.string.title_movie_list_pop);
         setHasOptionsMenu(true);
         return view;
 
@@ -85,16 +90,35 @@ public class MovieListFragment extends BaseFragment implements MoviesManager.OnC
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_popular) {
-            selectedMenu = MOVIE_POPULAR;
-            showLoadingDialog(R.string.msg_loading);
-            getActivity().setTitle(R.string.title_movie_list_pop);
-            mMoviesManager.getMoviesList(MovieListFragment.this, NetworkUrlService.SORT_BY_POPULAR);
+            if (NetworkUtility.isConnectionAvailable(getActivity())) {
+                selectedMenu = MOVIE_POPULAR;
+                showLoadingDialog(R.string.msg_loading);
+                ((MovieListActivity) getActivity()).setTitle(getString(R.string.title_movie_list_pop));
+                mMoviesManager.getMoviesList(MovieListFragment.this, NetworkUrlService.SORT_BY_POPULAR);
+            } else {
+                showMessageDialog(getString(R.string.no_network), getString(R.string.no_internet_connection));
+            }
             return true;
         } else if (id == R.id.action_rating) {
-            selectedMenu = MOVIE_RATED;
-            showLoadingDialog(R.string.msg_loading);
-            getActivity().setTitle(R.string.title_movie_list_rate);
-            mMoviesManager.getMoviesList(MovieListFragment.this, NetworkUrlService.SORT_BY_RATING);
+            if (NetworkUtility.isConnectionAvailable(getActivity())) {
+                selectedMenu = MOVIE_RATED;
+                showLoadingDialog(R.string.msg_loading);
+                ((MovieListActivity) getActivity()).setTitle(getString(R.string.title_movie_list_rate));
+                mMoviesManager.getMoviesList(MovieListFragment.this, NetworkUrlService.SORT_BY_RATING);
+            } else {
+                showMessageDialog(getString(R.string.no_network), getString(R.string.no_internet_connection));
+            }
+            return true;
+        } else if (id == R.id.action_fav_list) {
+            if (NetworkUtility.isConnectionAvailable(getActivity())) {
+
+                selectedMenu = MOVIE_FAV;
+                ((MovieListActivity) getActivity()).setTitle(getString(R.string.title_movie_fav));
+                List<MoviesItem> items = MovieDbHelper.getMovieList(NanodegreeApplication.getInstance().getDBHepler());
+                setMovieListView(items);
+            } else {
+                showMessageDialog(getString(R.string.no_network), getString(R.string.no_internet_connection));
+            }
             return true;
         }
 
@@ -119,11 +143,14 @@ public class MovieListFragment extends BaseFragment implements MoviesManager.OnC
     @Override
     public void onFailure(int apiId, String msg) {
         hideLoadingDialog();
+        showMessageDialog(getString(R.string.error), getString(R.string.unable_to_fetch_data));
     }
 
     @Override
     public void onException(int apiId, String msg) {
         hideLoadingDialog();
+        showMessageDialog(getString(R.string.error), getString(R.string.unable_to_fetch_data));
+
     }
 
 
@@ -143,8 +170,33 @@ public class MovieListFragment extends BaseFragment implements MoviesManager.OnC
         mListener.onMovieItemClick(movieItem);
     }
 
+    public String getScreenTitle() {
+        String title = "";
+        switch (selectedMenu) {
+            case MOVIE_FAV:
+                title = getString(R.string.title_movie_fav);
+                break;
+            case MOVIE_POPULAR:
+                title = getString(R.string.title_movie_list_pop);
+                break;
+            case MOVIE_RATED:
+                title = getString(R.string.title_movie_list_rate);
+                break;
+        }
+        return title;
+    }
+
 
     public interface OnFragmentInteractionListener {
         void onMovieItemClick(MoviesItem item);
+    }
+
+    public void updateFav() {
+        if (selectedMenu == MOVIE_FAV) {
+            getActivity().setTitle(R.string.title_movie_fav);
+            List<MoviesItem> items = MovieDbHelper.getMovieList(NanodegreeApplication.getInstance().getDBHepler());
+            setMovieListView(items);
+        }
+
     }
 }
