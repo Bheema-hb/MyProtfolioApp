@@ -20,8 +20,9 @@ import retrofit2.http.Query;
 
 public interface NetworkUrlService {
 
-    public static final String SORT_BY_POPULAR = "popular";
-    public static final String SORT_BY_RATING = "top_rated";
+
+    String SORT_BY_POPULAR = "popular";
+    String SORT_BY_RATING = "top_rated";
 
     @GET("/3/movie/{sort_by}")
     Call<MoviesResponse> getMoviesList(@Path("sort_by") String sortBy, @Query("api_key") String api_key);
@@ -31,7 +32,6 @@ public interface NetworkUrlService {
 
     @GET("/3/movie/{id}/videos")
     Call<TrailerResponse> getTrailorsForMovie(@Path("id") int id, @Query("api_key") String api_key);
-
 
 
 }
