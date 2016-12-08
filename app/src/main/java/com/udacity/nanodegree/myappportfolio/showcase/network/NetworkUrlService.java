@@ -6,11 +6,6 @@ import com.udacity.nanodegree.myappportfolio.showcase.model.TrailerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
-<<<<<<< 2d03e02adc5a1c8622e3cac9ffd7d8e9b7aa56ff
-import retrofit2.http.PUT;
-=======
->>>>>>> Moviestage2 completed
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
