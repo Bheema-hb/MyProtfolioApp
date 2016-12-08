@@ -5,6 +5,8 @@ import com.udacity.nanodegree.myappportfolio.showcase.model.MoviesResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -13,13 +15,11 @@ import retrofit2.http.Query;
 
 public interface NetworkUrlService {
 
-    public static final String SORT_BY_POPULAR = "popularity.desc";
-    public static final String SORT_BY_RATING = "vote_average.desc";
+    public static final String SORT_BY_POPULAR = "popular";
+    public static final String SORT_BY_RATING = "top_rated";
 
-    @GET("/3/discover/movie")
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
-    Call<MoviesResponse> getMoviesList(@Query("sort_by") String sortBy, @Query("api_key") String api_key);
-
+    @GET("/3/movie/{sort_by}")
+    Call<MoviesResponse> getMoviesList(@Path("sort_by") String sortBy, @Query("api_key") String api_key);
 
 
 }
